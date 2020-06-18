@@ -28,7 +28,9 @@ setup(
       'python-vlc',
       'ffmpy',
       'opencv-python',
-      'imageio'
+      'imageio',
+      'imutils',
+      'pygifsicle'
     ],
     include_package_data=True,
     test_suite="tests",
