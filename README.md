@@ -9,10 +9,10 @@
 ## Setup
 
 ```bash
-	$ sudo dnf -y install ffmpeg vlc
-	$ virtualenv .venv
-	$ source .venv/bin/activate
-	$ pip install -e .
+$ sudo dnf -y install ffmpeg vlc
+$ virtualenv .venv
+$ source .venv/bin/activate
+$ pip install -e .
 ```
 
 ## Configuration
