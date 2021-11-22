@@ -10,7 +10,7 @@
 
 ```bash
 $ sudo dnf -y install ffmpeg vlc
-$ virtualenv .venv
+$ python -m venv .venv
 $ source .venv/bin/activate
 $ pip install -e .
 ```
