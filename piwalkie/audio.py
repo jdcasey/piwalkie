@@ -5,7 +5,7 @@ from sys import byteorder
 from array import array
 from struct import pack
 
-import pyaudio
+from pyaudio import PyAudio, paInt16
 import wave
 import os
 
@@ -13,15 +13,17 @@ from tempfile import NamedTemporaryFile
 
 from piwalkie.config import WAV_THRESHOLD
 
-WAV_FORMAT = pyaudio.paInt16
+WAV_FORMAT = paInt16
 WAV_CHUNK_SIZE = 4096
 
-## WAV recording logic is adapted from: 
-## https://stackoverflow.com/questions/892199/detect-record-audio-in-python
+# WAV recording logic is adapted from:
+# https://stackoverflow.com/questions/892199/detect-record-audio-in-python
+
 
 def is_silent(snd_data, cfg):
     "Returns 'True' if below the 'silent' threshold"
     return max(snd_data) < WAV_THRESHOLD
+
 
 def trim(snd_data, cfg):
     "Trim the blank spots at the start and end"
@@ -47,6 +49,7 @@ def trim(snd_data, cfg):
     snd_data.reverse()
     return snd_data
 
+
 def detect_input(p, cfg):
     input_info = p.get_default_input_device_info()
     if input_info is None:
@@ -59,6 +62,7 @@ def detect_input(p, cfg):
                 break
 
     return input_info
+
 
 def record_wav(p, input_info, cfg, channels=1):
     """
@@ -109,13 +113,14 @@ def record_wav(p, input_info, cfg, channels=1):
     r = trim(r, cfg)
     return sample_width, r
 
+
 def record_ogg(cfg):
     "Records from the microphone and outputs the resulting data to 'path'"
 
     wavfile = NamedTemporaryFile('wb', prefix='walkie.recording.', suffix='.wav', delete=False)
     oggfile = NamedTemporaryFile('wb', prefix='walkie.voice-out.', suffix='.ogg', delete=False)
 
-    p = pyaudio.PyAudio()
+    p = PyAudio()
     input_info = detect_input(p, cfg)
     channels = int(input_info.get('maxInputChannels'))
     if channels > 4:

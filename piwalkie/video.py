@@ -5,7 +5,7 @@ import imageio
 import imutils
 from pygifsicle import optimize
 
-MUTEX=threading.Lock()
+MUTEX = threading.Lock()
 
 ##############################################
 # v4l2-ctl --list-devices
@@ -13,8 +13,8 @@ MUTEX=threading.Lock()
 #
 # TODO: Make this configuration!
 ##############################################
-DEVICE=4
-ROTATE=90
+DEVICE = 4
+ROTATE = 90
 
 
 def capture_gif(cfg):
@@ -34,9 +34,10 @@ def capture_gif(cfg):
 
     optimize(tf.name)
 
-    del(cam)
+    del cam
     MUTEX.release()
     return tf.name
+
 
 def capture_png(cfg):
     MUTEX.acquire()
@@ -49,7 +50,7 @@ def capture_png(cfg):
     tf = NamedTemporaryFile('w+b', prefix='cam.', suffix='.png', delete=False)
     cv2.imwrite(tf.name, image)
 
-    del(cam)
+    del cam
     MUTEX.release()
     return tf.name
 
